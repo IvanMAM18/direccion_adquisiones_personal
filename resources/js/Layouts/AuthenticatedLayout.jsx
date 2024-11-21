@@ -12,7 +12,7 @@ export default function Authenticated({ user, header, children }) {
     const {status} = usePage().props
 
     return (
-        <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
+        <div className="min-h-screen">
             {status && <div className="bg-green-500 p-2 text-center">{status}</div> }
             <nav className="bg-pink-950 dark:bg-pink-950 border-b border-orange-200 dark:border-orange-200">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -29,10 +29,10 @@ export default function Authenticated({ user, header, children }) {
                                     INICIO
                                 </NavLink>
 
-                                <NavLink href={route('home')}>
+                                <NavLink active={route().current('actualizacion')} linkName={'actualizacion'}>
                                     ACTUALIZACION
                                 </NavLink>
-                                <NavLink href={route('home')}>
+                                <NavLink active={route().current('alta')} linkName={'alta'}>
                                     ALTA
                                 </NavLink>
                             </div>

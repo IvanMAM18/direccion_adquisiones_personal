@@ -3,18 +3,18 @@ import InfoExtraTabla from '@/Components/InfoExtraTabla';
 import Footer from '@/Layouts/Footer';
 import { Head } from '@inertiajs/react';
 
-export default function Dashboard({ auth }) {
+export default function Actualizacion({ auth , tipo}) {
     return (
         <>
             <AuthenticatedLayout
                 user={auth.user}
-                header={<h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">OFICIALIA MAYOR DIRECCION DE ADQUISIONES Y SERVICIOS GENERALES</h2>}
+                header={<h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">FORMATO DE ACTULIZACION PARA PERSONAS {tipo === 'moral' ?('MORALES'):('FISICAS')}</h2>}
             >
                 <Head title="Inicio"/>
 
-                <div className="relative w-full pt-4 bg-dots-darker bg-center  selection:bg-red-500 selection:text-white">
+                <div className="relative w-full min-h-screen pt-4 bg-dots-darker bg-center  selection:bg-red-500 selection:text-white">
                     <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                        <InfoExtraTabla></InfoExtraTabla>
+                        {/* <InfoExtraTabla></InfoExtraTabla> */}
                     </div>
                 </div>
                 <Footer></Footer>

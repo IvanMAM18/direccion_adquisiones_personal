@@ -33,6 +33,14 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/actualizacion/{tipo}', function ($tipo) {
+    return Inertia::render('Actualizacion', ['tipo' => $tipo]);
+ })->middleware(['auth', 'verified'])->name('actualizacion');
+
+ Route::get('/alta/{tipo}', function ($tipo) {
+    return Inertia::render('Alta', ['tipo' => $tipo]);
+ })->middleware(['auth', 'verified'])->name('alta');
+
 Route::resource('/actualizacion-persona-moral', TablaActualizacionPersonaMoralController::class)
     ->only(['index', 'store', 'update', 'destroy'])
     ->middleware('auth');
@@ -49,7 +57,7 @@ Route::resource('/alta-persona-fisica', TablaAltaPersonaFisicaController::class)
     ->only(['index', 'store', 'update', 'destroy'])
     ->middleware('auth');
 
-    Route::resource('/alta-sucursal-persona-moral', TablaAltaSucursalPersonaMoralController::class)
+Route::resource('/alta-sucursal-persona-moral', TablaAltaSucursalPersonaMoralController::class)
     ->only(['index', 'store', 'update', 'destroy'])
     ->middleware('auth');
 
@@ -71,7 +79,7 @@ Route::resource('/titulosPublicos', TituloController::class)
 Route::resource('/logsPublicos', LogsController::class)
     ->only(['index']);
 
- Route::get('/home', function () {
+Route::get('/home', function () {
     return Inertia::render('Dashboard');
  })->middleware(['auth', 'verified'])->name('home');
 
