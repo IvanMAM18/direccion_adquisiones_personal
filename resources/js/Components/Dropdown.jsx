@@ -75,7 +75,7 @@ const DropdownLink = ({ className = '', children, ...props }) => {
         <Link
             {...props}
             className={
-                'block w-full px-4 py-2 text-start text-sm leading-5 text-emerald-950 dark:text-emerald-950 hover:bg-emerald-950 hover:text-white dark:hover:bg-emerald-950 focus:outline-none focus:bg-emerald-950 dark:focus:bg-emerald-950 focus:text-white transition duration-150 ease-in-out ' +
+                'block w-full px-4 py-2 text-start text-sm leading-5 text-rose-950 dark:text-rose-950 hover:bg-rose-950 hover:text-white dark:hover:bg-rose-950 focus:outline-none focus:bg-rose-950 dark:focus:bg-rose-950 focus:text-white transition duration-150 ease-in-out ' +
                 className
             }
         >
@@ -89,7 +89,7 @@ const DropdownButton = ({ className = '', children, ...props }) => {
         <button
             {...props}
             className={
-                'block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-800 transition duration-150 ease-in-out ' +
+                'block w-full px-4 py-2 text-start text-sm leading-5 text-orange-700 dark:text-orange-300 hover:bg-orange-100 dark:hover:bg-orange-800 focus:outline-none focus:bg-orange-100 dark:focus:bg-orange-800 transition duration-150 ease-in-out ' +
                 className
             }
         >

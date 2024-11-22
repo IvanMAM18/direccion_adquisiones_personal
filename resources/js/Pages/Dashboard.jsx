@@ -13,7 +13,7 @@ export default function Dashboard({ auth }) {
                 <Head title="Inicio"/>
 
                 <div className="relative w-full pt-4 bg-dots-darker bg-center  selection:bg-red-500 selection:text-white">
-                    <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <div className="w-11/12 mx-auto">
                         <InfoExtraTabla></InfoExtraTabla>
                     </div>
                 </div>

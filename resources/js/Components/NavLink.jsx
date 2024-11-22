@@ -43,10 +43,10 @@ export default function NavLink({ active = false, className = '', linkName = '' 
                             </div>
                             {isOpen && (
                                  <div className="absolute left-1/2 transform -translate-x-1/2 top-full mt-1 bg-white shadow-lg rounded-md transition-opacity duration-200">
-                                     <Link href={route(linkName, { tipo: 'moral' })} className="block px-4 py-2 text-black rounded-md hover:bg-gray-200" onClick={closeDropdown}>
+                                     <Link href={route(linkName, { tipo: 'moral' })} className="block px-4 py-2 text-rose-950 rounded-md hover:text-white hover:bg-rose-900" onClick={closeDropdown}>
                                          MORAL
                                      </Link>
-                                     <Link href={route(linkName, { tipo: 'fisica' })} className="block px-4 py-2 text-black rounded-md hover:bg-gray-200" onClick={closeDropdown}>
+                                     <Link href={route(linkName, { tipo: 'fisica' })} className="block px-4 py-2 text-rose-950 rounded-md hover:text-white hover:bg-rose-900" onClick={closeDropdown}>
                                          FISICA
                                      </Link>
                                  </div>

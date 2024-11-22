@@ -45,7 +45,7 @@ export default function Authenticated({ user, header, children }) {
                                         <span className="inline-flex rounded-md">
                                             <button
                                                 type="button"
-                                                className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-600 bg-transparent dark:bg-transparent hover:text-pink-950 dark:hover:text-white focus:outline-none dark:focus:text-white transition ease-in-out duration-150"
+                                                className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-300 bg-transparent dark:bg-transparent hover:text-pink-950 dark:hover:text-orange-200 focus:outline-none dark:focus:text-white transition ease-in-out duration-150"
                                             >
                                                 {user.name}
 
@@ -104,7 +104,13 @@ export default function Authenticated({ user, header, children }) {
                 <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
                     <div className="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink href={route('home')} active={route().current('home')}>
-                            Inicio
+                            INICIO
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink active={route().current('actualizaciopn')} linkName={'actualizacion'}>
+                            ACTUALIZACION
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink active={route().current('alta')} linkName={'alta'}>
+                            ALTA
                         </ResponsiveNavLink>
                     </div>
 
