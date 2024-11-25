@@ -9,7 +9,7 @@ export default function Guest({ children }) {
                     <img src="../images/escudo_lapaz_2024.png" alt="" className="w-40 h-30 fill-current text-gray-500"/>
                 </div>
 
-                <div className="w-full sm:max-w-md mt-6 px-6 py-4 bg-pink-950 dark:bg-pink-900 shadow-md overflow-hidden sm:rounded-lg opacity-75">
+                <div className="w-full sm:max-w-md mt-6 px-6 py-4 bg-pink-950 dark:bg-rose-950 shadow-md overflow-hidden sm:rounded-lg">
                     {children}
                 </div>
             </div>
