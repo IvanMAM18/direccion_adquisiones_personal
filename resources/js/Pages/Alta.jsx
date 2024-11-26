@@ -1,5 +1,6 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import InfoExtraTabla from '@/Components/InfoExtraTabla';
+import BuscarNegocios from '@/Components/BuscarNegocios';
 import Footer from '@/Layouts/Footer';
 import { Head } from '@inertiajs/react';
 
@@ -12,9 +13,10 @@ export default function Alta({ auth , tipo}) {
             >
                 <Head title="Inicio"/>
 
-                <div className="relative w-full h-screen pt-4 bg-dots-darker bg-center  selection:bg-red-500 selection:text-white">
-                    <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div className="relative w-full min-h-screen pt-4 bg-dots-darker bg-center  selection:bg-red-500 selection:text-white">
+                    <div className="w-11/12 mx-auto">
                         {/* <InfoExtraTabla></InfoExtraTabla> */}
+                        <BuscarNegocios></BuscarNegocios>
                     </div>
                 </div>
                 <Footer></Footer>

@@ -1,6 +1,7 @@
 import { Head } from '@inertiajs/react';
 import React, { useState,useRef,useEffect } from 'react';
 import IconLocalForaneo from './IconLocalForaneo';
+import ModalInfoRequisitos from './ModalInfoRequisitos';
 import IconDownUp from './IconDownUp';
 import axios from 'axios';
 //import FileUpload from "@/Components/FileUpload";
@@ -13,6 +14,19 @@ export default function InfoExtraTabla({tipo}) {
     const [isExpanded, setIsExpanded] = useState(false);
     const [abajoArriba, setAbajoArriba] = useState(false);
     const [isOpenTwo, setIsOpenTwo] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const currentDate = new Date();
+
+    // Formato "11/12/2024"
+    const formattedDate1 = `${currentDate.getDate().toString().padStart(2, '0')}/${(currentDate.getMonth() + 1).toString().padStart(2, '0')}/${currentDate.getFullYear()}`;
+
+    // Formato "12 de diciembre del 2024"
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    const formattedDate2 = currentDate.toLocaleDateString('es-ES', options).replace('de', 'de');
+
+    const toggleModal = () => {
+        setIsModalOpen(!isModalOpen);
+    };
 
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
@@ -55,17 +69,21 @@ export default function InfoExtraTabla({tipo}) {
             <>
                 <div className='relative mt-4 pb-10 mx-auto'>
                     <div className='flex mb-4'>
-                        <div className="relative inline-block text-left">
-                            <div className='flex items-center cursor-pointer' onClick={toggleDropdown}>
+                        <div className="relative inline-block text-left ">
+                            <div className='flex items-center cursor-pointer text-rose-950 font-bold hover:font-extrabold' 
+                                onClick={toggleDropdown}
+                                onMouseEnter={toggleAbajo} 
+                                onMouseLeave={toggleAbajo}
+                            >
                                 <IconLocalForaneo selectedTipoLF={selectedOption} tamanio={4}/>
                                 <div className='mx-2'>
                                     {selectedOption}
                                 </div>
-                                <IconDownUp DownUp={isOpen} tamanio={4} />
+                                <IconDownUp  DownUp={abajoArriba} tamanio={4} />
                             </div>
 
                             {isOpen && (
-                                <div className="absolute left-0 z-10 mt-1 bg-rose-950 rounded-md shadow-lg">
+                                <div className="absolute p-1 left-0 z-10 mt-1 bg-rose-950 rounded-md shadow-lg">
                                     <div 
                                         className="block flex items-center px-4 py-2 rounded-md text-white hover:text-orange-200 hover:font-bold hover:bg-rose-900 cursor-pointer"
                                         onClick={() => handleOptionClick('LOCAL')}
@@ -88,24 +106,31 @@ export default function InfoExtraTabla({tipo}) {
                                 </div>
                             )}
                         </div>
-                        <div className='ml-auto flex'>
-                            <div className='mx-2 flex items-center'>
+                        <div className='ml-auto flex text-rose-950 font-bold'>
+                            <div className='mx-2 p-1 flex items-center'>
                                 BUSCAR
                                 <svg className="h-4 w-4 mx-2" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
                                     <circle cx="11" cy="11" r="8" />  
                                     <line x1="21" y1="21" x2="16.65" y2="16.65" />
                                 </svg>
                             </div>
-                            <div className='mx-2 flex items-center'>
+                            <div onClick={toggleModal} className="cursor-pointer flex p-2 items-center hover:bg-rose-950 hover:text-orange-200 hover:rounded-lg hover:shadow-lg">
                                 REQUISITOS
                                 <svg className="h-4 w-4 ml-2" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.618 5.984A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016zM12 9v2m0 4h.01"/>
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20.618 5.984A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016zM12 9v2m0 4h.01" />
                                 </svg>
                             </div>
+
+            
+
+                               
                         </div>
                     </div>
-                    
+                    {isModalOpen && (
+                        <ModalInfoRequisitos/>
+                    )}
                     <div className='relative'>
+                        
                         <div
                             className={`px-4  text-rose-950 rounded-2xl opacity-85   transition-all duration-300 ${
                                 isExpanded ? 'bg-orange-300 cursor-pointer hover:opacity-100 hover:text-white hover:shadow-xl hover:drop-shadow-lg' : 'h-auto border-2 border-orange-300'
@@ -115,15 +140,17 @@ export default function InfoExtraTabla({tipo}) {
                                 <div 
                                     className='z-10 py-4 flex items-center'
                                     onClick={toggleExpand}
+                                    onMouseEnter={toggleAbajo} 
+                                    onMouseLeave={toggleAbajo}
                                 >
                                     <IconLocalForaneo selectedTipoLF={selectedOption} tamanio={10} />
                                     <div className='px-4 text-xl font-bold'>
                                         NOMBRE {tipo}
                                     </div>
                                     <div  className='ml-auto mx-4'>
-                                        22/11/2024
+                                        {formattedDate1}
                                     </div>
-                                    <IconDownUp  DownUp={isExpanded} tamanio={4} />
+                                    <IconDownUp  DownUp={abajoArriba} tamanio={4} />
                                 </div>
                             ):(
                                <div className='px-4 pb-4'>
@@ -142,7 +169,7 @@ export default function InfoExtraTabla({tipo}) {
                                         </div>
                                     </div>
                                     <div className='text-lg text-end'>
-                                        LA PAZ, B.C.S A 15 DE NOVIEMBRE DEL 2024
+                                        LA PAZ, B.C.S A {formattedDate2.toUpperCase()}
                                     </div>
                                     <div className='mb-1'>
                                         <p className='text-xs text-zinc-800'>RAZON SOCIAL:</p>
@@ -233,6 +260,7 @@ export default function InfoExtraTabla({tipo}) {
                                 </div> 
                             )}
                         </div>
+                        
                     </div>
                     
 
