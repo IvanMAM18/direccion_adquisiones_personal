@@ -1,5 +1,6 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import InfoActualizacion from '@/Components/InfoActualizacion';
+import IconDownUp from '@/Components/IconDownUp';
 import Footer from '@/Layouts/Footer';
 import { Head } from '@inertiajs/react';
 
@@ -8,7 +9,15 @@ export default function Actualizacion({ auth , tipo}) {
         <>
             <AuthenticatedLayout
                 user={auth.user}
-                header={<h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">FORMATO DE ACTULIZACION PARA PERSONAS {tipo === 'moral' ?('MORALES'):('FISICAS')}</h2>}
+                header=
+                {
+                    <div className='flex'>
+                        <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                            FORMATO DE ACTULIZACION PARA PERSONAS {tipo === 'moral' ?('MORALES'):('FISICAS')}
+                        </h2>
+                         <IconDownUp clase={'w-full py-4 pr-20 top-16 left-0 text-white'} tamanio={4} /> 
+                    </div>
+                }
             >
                 <Head title="Inicio"/>
 

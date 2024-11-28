@@ -16,6 +16,32 @@ export default function InfoActualizacion({tipo}) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const currentDate = new Date();
     const [estaEnBusqueda, setEstaEnBusqueda] = useState(false);
+    const [data, setData] = useState(null);
+    const [error, setError] = useState(null);
+    const id = '5'; // ID fijo para buscar
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.post('https://177u01isy3.lapaz.gob.mx/api/negocios/buscar', {
+                    q: id,
+                }, {
+                    headers: {
+                        'Authorization': 'Bearer $2y$10$cY1S7FqotCNZ6l6t4z//UOxkKiWisAtnPtnRsRtOHpkTMNEeyFgkq',
+                        'Content-Type': 'application/json',
+                    },
+                });
+                setData(response.data);
+                console.log(data);
+                setError(null);
+            } catch (err) {
+                setError('Error al buscar el negocio');
+                setData(null);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     const manejarClickDeBusqueda = () => {
         setEstaEnBusqueda(true);
@@ -73,7 +99,8 @@ export default function InfoActualizacion({tipo}) {
             <>
                 <div className='relative mt-4 pb-10 mx-auto'>
                     <div className='flex mb-4'>
-                        <div className="relative inline-block text-left ">
+                        {/* PARA CUANDO SE PUEDA VISUALIZAR SI SON LOCAL O FORANEOS */}
+                        {/* <div className="relative inline-block text-left ">
                             <div className={`${isOpen ? ('bg-rose-950 text-orange-300 shadow-lg') : ('hover:bg-rose-950 hover:text-orange-300 text-rose-950')} flex items-center p-2 rounded-lg cursor-pointer  font-bold transition-all duration-300 ease-in-out`} 
                                 onClick={toggleDropdown}
                             >
@@ -108,43 +135,29 @@ export default function InfoActualizacion({tipo}) {
                                     </div>
                                 </div>
                             )}
-                        </div>
-                        <div className='ml-auto flex text-rose-950 font-bold'>
-                                {estaEnBusqueda ? (
-                                    <div className="flex items-center transition duration-700 ease-in-out rounded-lg mr-2">
-                                        <div className="relative rounded-lg">
-                                            <input
-                                                type="text"
-                                                className="pl-2 border rounded-lg bg-transparent border-transparent text-rose-950 placeholder-rose-900 hover:border-rose-900 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-rose-900 "
-                                                placeholder="BUSCAR"
-                                            />
-                                            <button
-                                                onClick={manejarClickDeCancelar}
-                                                className="absolute right-2 top-1/2 transform -translate-y-1/2 "
-                                            >
-                                                <svg
-                                                    className="h-4 w-4" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round"
-                                                >
-                                                    <circle cx="11" cy="11" r="8" />
-                                                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    </div>
-                                ) : (
-                                    <div
-                                        className="flex p-2 items-center cursor-pointer transition-all duration-300 ease-in-out hover:bg-rose-950 hover:text-orange-300 rounded-lg"
-                                        onClick={manejarClickDeBusqueda}
+                        </div> */}
+                        <div className="flex items-center transition duration-700 ease-in-out rounded-lg mr-2">
+                            <div className="relative rounded-lg">
+                                <input
+                                    type="text"
+                                    className="pl-2 border rounded-lg bg-transparent border-transparent text-rose-950 placeholder-rose-900 hover:border-rose-900 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-rose-900 "
+                                    placeholder="BUSCAR"
+                                />
+                                <button
+                                    onClick={manejarClickDeCancelar}
+                                    className="absolute right-2 top-1/2 transform -translate-y-1/2 "
+                                >
+                                    <svg
+                                        className="h-4 w-4" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round"
                                     >
-                                        BUSCAR
-                                        <svg
-                                            className="h-4 w-4 ml-1" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round"
-                                        >
-                                            <circle cx="11" cy="11" r="8" />
-                                            <line x1="21" y1="21" x2="16.65" y2="16.65" />
-                                        </svg>
-                                    </div>
-                                )}
+                                        <circle cx="11" cy="11" r="8" />
+                                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div className='ml-auto flex text-rose-950 font-bold'>  
                             <div onClick={toggleModal} className={`${isModalOpen ? ('bg-rose-950 text-orange-300 shadow-lg') : ('hover:bg-rose-950 hover:text-orange-300 hover:shadow-lg')} cursor-pointer flex p-2 items-center rounded-lg`}>
                                 REQUISITOS
                                 <svg className="h-4 w-4 ml-2" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
@@ -163,124 +176,142 @@ export default function InfoActualizacion({tipo}) {
                                 isExpanded ? 'bg-orange-300 cursor-pointer hover:opacity-100 hover:text-white hover:shadow-xs hover:drop-shadow-lg' : 'h-auto border-2 border-orange-300'
                             }`}
                         >
-                            {isExpanded ? (
+                            {data ? (
+                                isExpanded ? (
+                                    <div 
+                                        className='z-10 py-4 flex items-center'
+                                        onClick={toggleExpand}
+                                    >
+                                        <IconLocalForaneo selectedTipoLF={selectedOption} tamanio={10} />
+                                        <div className='px-4 text-xl font-bold'>
+                                            {data.negocio.nombre.toUpperCase()}{tipo}
+                                        </div>
+                                        <div  className='ml-auto mx-4'>
+                                            {formattedDate1}
+                                        </div>
+                                        <IconDownUp clase={'w-full h-full left-0 pr-2'} tamanio={4} />
+                                    </div>
+                                ):(
+                                    <div className='px-4 pb-4'>
+                                        <div className='z-10 py-4 flex items-center'>
+                                            <IconLocalForaneo selectedTipoLF={selectedOption} tamanio={16} />
+                                            <div className='px-4 text-xl font-bold'>
+                                                {selectedOption}
+                                            </div>
+                                            <div  
+                                                className='hover:text-orange-300  cursor-pointer justify-center'
+                                                onClick={toggleExpand}
+                                            >
+                                                <IconDownUp clase={'w-full py-6 pr-8 mt-3 left-0 top-0'} tamanio={8} />
+                                            </div> 
+                                        </div>
+                                        <div className='text-lg text-end'>
+                                            LA PAZ, B.C.S A {formattedDate2.toUpperCase()}
+                                        </div>
+                                        <div className='mb-1'>
+                                            <p className='text-xs text-zinc-800'>RAZON SOCIAL:</p>
+                                            <p className='text-xl font-bold'>{data.negocio.persona_moral.razon_social.toUpperCase()}</p>
+                                        </div>
+                                        <div className='my-1'>
+                                            <p className='text-xs text-zinc-800'>NOMBRE COMERCIO:</p>
+                                            <p className='text-xl font-bold'>{data.negocio.nombre.toUpperCase()}</p>
+                                        </div>
+                                        <div className='my-1'>
+                                            <p className='text-xs text-zinc-800'>DOMICILIO: </p>
+                                            <p className='text-xl font-bold'>{data.negocio.direccion.calle_principal.toUpperCase()} E/ {data.negocio.direccion.calles.toUpperCase()}</p>
+                                        </div>
+                                        <div className='flex my-1'>
+                                            <div className='w-1/2'>
+                                                <p className='text-xs text-zinc-800'>COLONIA:</p>
+                                                <p className='text-xl font-bold'>{data.negocio.direccion.colonia.toUpperCase()}</p>
+                                            </div>
+                                            <div className='w-1/4'>
+                                                <p className='text-xs text-zinc-800'>CODIGO POSTAL: </p>
+                                                <p className='text-xl font-bold'>{data.negocio.direccion.codigo_postal.toUpperCase()}</p>
+                                            </div>
+                                            <div className='w-1/4'>
+                                                <p className='text-xs text-zinc-800'>POBLACION: </p>
+                                                <p className='text-xl font-bold'>[Población]</p>
+                                            </div>
+                                        </div>
+                                        <div className='flex my-1'>
+                                            <div className='w-1/2'>
+                                                <p className='text-xs text-zinc-800'>CORREO ELECTRONICO:</p>
+                                                <p className='text-xl font-bold'>{data.negocio.persona_fisica.email}</p>
+                                            </div>
+                                            <div className='w-1/2'>
+                                                <p className='text-xs text-zinc-800'>REGISTRO GENERAL DE CONTR.:</p>
+                                                <p className='text-xl font-bold'>{data.negocio.persona_fisica.rfc}</p>
+                                            </div>
+                                        </div>
+                                        <div className='my-1'>
+                                            <p className='text-xs text-zinc-800'>ACTIVIDAD ECONOMICA Y/O PREPONDERANTE:</p>
+                                            <p className='text-xl font-bold'>[Actividad Económica]</p>
+                                        </div>
+                                        <div className='flex my-1'>
+                                            <div className='w-1/2'>
+                                                <p className='text-xs text-zinc-800'>TELEFONO EMPRESA:</p>
+                                                <p className='text-xl font-bold'>[Teléfono Empresa]</p>
+                                            </div>
+                                            <div className='w-1/4'>
+                                                <p className='text-xs text-zinc-800'>NUM. CELULAR:</p>
+                                                <p className='text-xl font-bold'>{data.negocio.telefono.toUpperCase()}</p>
+                                            </div>
+                                            <div className='w-1/4'>
+                                                <p className='text-xs text-zinc-800'>AGENTE DE VENTA Y/O PERSONA DE ENLACE:</p>
+                                                <p className='text-xl font-bold'>[Agente de Venta]</p>
+                                            </div>
+                                        </div>
+                                        <div className='flex my-1'>
+                                            <div className='w-1/2'>
+                                                <p className='text-xs text-zinc-800'>NOMBRE COMPLETO DEL REPRESENTANTE LEGAL:</p>
+                                                <p className='text-xl font-bold'>[Nombre Completo]</p>
+                                            </div>
+                                            <div className='w-1/2'>
+                                                <p className='text-xs text-zinc-800'>TELEFONO DEL REPRESENTANTE LEGAL:</p>
+                                                <p className='text-xl font-bold'>[Teléfono del Representante]</p>
+                                            </div>
+                                        </div>
+                                        <div className='flex my-1'>
+                                            <div className='w-1/2'>
+                                                <p className='text-xs text-zinc-800'>RFC DEL REPRESENTANTE LEGAL:</p>
+                                                <p className='text-xl font-bold'>[RFC del representante legal]</p>
+                                            </div>
+                                            <div className='w-1/2'>
+                                                <p className='text-xs text-zinc-800'>PLAZO DE CREDITO:</p>
+                                                <p className='text-xl font-bold'>[Plazo de Crédito]</p>
+                                            </div>
+                                        </div>
+                                        <div className='justify-items-end'>
+                                            <button className='flex items-center bg-orange-300 text-zinc-800 py-2 px-4 rounded hover:bg-orange-400 hover:font-bold hover:text-white'>
+                                                <svg className="h-4 w-4" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z"/>  
+                                                    <path d="M14 3v4a1 1 0 0 0 1 1h4" />  
+                                                    <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />  
+                                                    <line x1="12" y1="11" x2="12" y2="17" />  
+                                                    <polyline points="9 14 12 17 15 14" />
+                                                </svg>
+                                                EXPORTAR EXCEL
+                                            </button>
+                                        </div>
+                                    </div> 
+                                )
+                            ) : (
                                 <div 
                                     className='z-10 py-4 flex items-center'
-                                    onClick={toggleExpand}
                                 >
-                                    <IconLocalForaneo selectedTipoLF={selectedOption} tamanio={10} />
+                                    <svg className="h-10 w-10" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                                        <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" />  
+                                        <polyline points="13 2 13 9 20 9" />
+                                    </svg>
                                     <div className='px-4 text-xl font-bold'>
-                                        NOMBRE {tipo}
+                                        {tipo.toUpperCase()}
                                     </div>
                                     <div  className='ml-auto mx-4'>
                                         {formattedDate1}
                                     </div>
                                     <IconDownUp clase={'w-full h-full left-0 pr-2'} tamanio={4} />
                                 </div>
-                            ):(
-                               <div className='px-4 pb-4'>
-                                    <div className='z-10 py-4 flex items-center'>
-                                        <IconLocalForaneo selectedTipoLF={selectedOption} tamanio={16} />
-                                        <div className='px-4 text-xl font-bold'>
-                                            {selectedOption}
-                                        </div>
-                                        <div  
-                                            className='hover:text-orange-300  cursor-pointer justify-center'
-                                            onClick={toggleExpand}
-                                        >
-                                            <IconDownUp clase={'w-full py-6 pr-8 mt-3 left-0 top-0'} tamanio={8} />
-                                        </div> 
-                                    </div>
-                                    <div className='text-lg text-end'>
-                                        LA PAZ, B.C.S A {formattedDate2.toUpperCase()}
-                                    </div>
-                                    <div className='mb-1'>
-                                        <p className='text-xs text-zinc-800'>RAZON SOCIAL:</p>
-                                        <p className='text-xl font-bold'>[Razón Social]</p>
-                                    </div>
-                                    <div className='my-1'>
-                                        <p className='text-xs text-zinc-800'>NOMBRE COMERCIO:</p>
-                                        <p className='text-xl font-bold'>[Nombre Comercio]</p>
-                                    </div>
-                                    <div className='my-1'>
-                                        <p className='text-xs text-zinc-800'>DOMICILIO: </p>
-                                        <p className='text-xl font-bold'>[Domicilio]</p>
-                                    </div>
-                                    <div className='flex my-1'>
-                                        <div className='w-1/2'>
-                                            <p className='text-xs text-zinc-800'>COLONIA:</p>
-                                            <p className='text-xl font-bold'>[Colonia]</p>
-                                        </div>
-                                        <div className='w-1/4'>
-                                            <p className='text-xs text-zinc-800'>CODIGO POSTAL: </p>
-                                            <p className='text-xl font-bold'>[Código Postal]</p>
-                                        </div>
-                                        <div className='w-1/4'>
-                                            <p className='text-xs text-zinc-800'>POBLACION: </p>
-                                            <p className='text-xl font-bold'>[Población]</p>
-                                        </div>
-                                    </div>
-                                    <div className='flex my-1'>
-                                        <div className='w-1/2'>
-                                            <p className='text-xs text-zinc-800'>CORREO ELECTRONICO:</p>
-                                            <p className='text-xl font-bold'>[Correo Electrónico]</p>
-                                        </div>
-                                        <div className='w-1/2'>
-                                            <p className='text-xs text-zinc-800'>REGISTRO GENERAL DE CONTR.:</p>
-                                            <p className='text-xl font-bold'>[Registro General]</p>
-                                        </div>
-                                    </div>
-                                    <div className='my-1'>
-                                        <p className='text-xs text-zinc-800'>ACTIVIDAD ECONOMICA Y/O PREPONDERANTE:</p>
-                                        <p className='text-xl font-bold'>[Actividad Económica]</p>
-                                    </div>
-                                    <div className='flex my-1'>
-                                        <div className='w-1/2'>
-                                            <p className='text-xs text-zinc-800'>TELEFONO EMPRESA:</p>
-                                            <p className='text-xl font-bold'>[Teléfono Empresa]</p>
-                                        </div>
-                                        <div className='w-1/4'>
-                                            <p className='text-xs text-zinc-800'>NUM. CELULAR:</p>
-                                            <p className='text-xl font-bold'>[Número Celular]</p>
-                                        </div>
-                                        <div className='w-1/4'>
-                                            <p className='text-xs text-zinc-800'>AGENTE DE VENTA Y/O PERSONA DE ENLACE:</p>
-                                            <p className='text-xl font-bold'>[Agente de Venta]</p>
-                                        </div>
-                                    </div>
-                                    <div className='flex my-1'>
-                                        <div className='w-1/2'>
-                                            <p className='text-xs text-zinc-800'>NOMBRE COMPLETO DEL REPRESENTANTE LEGAL:</p>
-                                            <p className='text-xl font-bold'>[Nombre Completo]</p>
-                                        </div>
-                                        <div className='w-1/2'>
-                                            <p className='text-xs text-zinc-800'>TELEFONO DEL REPRESENTANTE LEGAL:</p>
-                                            <p className='text-xl font-bold'>[Teléfono del Representante]</p>
-                                        </div>
-                                    </div>
-                                    <div className='flex my-1'>
-                                        <div className='w-1/2'>
-                                            <p className='text-xs text-zinc-800'>RFC DEL REPRESENTANTE LEGAL:</p>
-                                            <p className='text-xl font-bold'>[RFC]</p>
-                                        </div>
-                                        <div className='w-1/2'>
-                                            <p className='text-xs text-zinc-800'>PLAZO DE CREDITO:</p>
-                                            <p className='text-xl font-bold'>[Plazo de Crédito]</p>
-                                        </div>
-                                    </div>
-                                    <div className='justify-items-end'>
-                                        <button className='flex items-center bg-orange-300 text-zinc-800 py-2 px-4 rounded hover:bg-orange-400 hover:font-bold hover:text-white'>
-                                            <svg className="h-4 w-4" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                                                <path stroke="none" d="M0 0h24v24H0z"/>  
-                                                <path d="M14 3v4a1 1 0 0 0 1 1h4" />  
-                                                <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />  
-                                                <line x1="12" y1="11" x2="12" y2="17" />  
-                                                <polyline points="9 14 12 17 15 14" />
-                                            </svg>
-                                            EXPORTAR EXCEL
-                                        </button>
-                                    </div>
-                                </div> 
                             )}
                         </div>
                         
