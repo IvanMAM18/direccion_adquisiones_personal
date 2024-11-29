@@ -29,11 +29,8 @@ export default function Authenticated({ user, header, children }) {
                                     INICIO
                                 </NavLink>
 
-                                <NavLink active={route().current('actualizacion')} linkName={'actualizacion'}>
-                                    ACTUALIZACION
-                                </NavLink>
-                                <NavLink active={route().current('alta')} linkName={'alta'}>
-                                    ALTA
+                                <NavLink active={route().current('formato')} linkName={'formato'}>
+                                    FORMATO
                                 </NavLink>
                             </div>
                         </div>
@@ -107,10 +104,7 @@ export default function Authenticated({ user, header, children }) {
                             INICIO
                         </ResponsiveNavLink>
                         <ResponsiveNavLink active={route().current('actualizaciopn')} linkName={'actualizacion'}>
-                            ACTUALIZACION
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink active={route().current('alta')} linkName={'alta'}>
-                            ALTA
+                            FORMATOS
                         </ResponsiveNavLink>
                     </div>
 
@@ -132,7 +126,7 @@ export default function Authenticated({ user, header, children }) {
 
             {header && (
                 <header className="bg-white dark:bg-pink-950 shadow">
-                    <div className="max-w-7xl mx-auto py-3 px-4 sm:px-6 lg:px-8">{header}</div>
+                    <div className="w-full">{header}</div>
                 </header>
             )}
 

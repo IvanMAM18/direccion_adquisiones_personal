@@ -4,14 +4,21 @@ import IconDownUp from '@/Components/IconDownUp';
 import Footer from '@/Layouts/Footer';
 import { Head } from '@inertiajs/react';
 
-export default function Actualizacion({ auth , tipo}) {
+export default function Formato({ auth , modo ,tipo}) {
     return (
         <>
             <AuthenticatedLayout
                 user={auth.user}
                 header=
                 {
-                    <IconDownUp clase={'w-full text-white'} tamanio={4} titulosFormatos={`FORMATO DE ACTULIZACION PARA PERSONAS ${tipo === 'moral' ?('MORALES'):('FISICAS')}`}/> 
+                    <IconDownUp 
+                        clase={'w-full text-white'} 
+                        tamanio={4} 
+                        titulosFormatos=
+                            {
+                                `FORMATO DE ${modo.toUpperCase()} PARA PERSONAS ${tipo === 'moral' ?('MORALES'):('FISICAS')}`
+                            }
+                    /> 
                 }
             >
                 <Head title="Inicio"/>

@@ -140,12 +140,12 @@ export default function InfoActualizacion({tipo}) {
                             <div className="relative rounded-lg">
                                 <input
                                     type="text"
-                                    className="pl-2 border rounded-lg bg-transparent border-transparent text-rose-950 placeholder-rose-900 hover:border-rose-900 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-rose-900 "
+                                    className="pl-2 border rounded-lg bg-transparent border-transparent text-rose-950 placeholder-rose-900 hover:border hover:border-rose-900 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-rose-900 "
                                     placeholder="BUSCAR"
                                 />
                                 <button
                                     onClick={manejarClickDeCancelar}
-                                    className="absolute right-2 top-1/2 transform -translate-y-1/2 "
+                                    className="absolute right-2 top-1/2 transform -translate-y-1/2 text-rose-900 hover:text-rose-950"
                                 >
                                     <svg
                                         className="h-4 w-4" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round"
@@ -189,7 +189,7 @@ export default function InfoActualizacion({tipo}) {
                                         <div  className='ml-auto mx-4'>
                                             {formattedDate1}
                                         </div>
-                                        <IconDownUp clase={'w-full h-full left-0 pr-2'} tamanio={4} />
+                                        <IconDownUp clase={'w-full h-full left-0 pr-2'} tamanio={4} titulosFormatos={null}/>
                                     </div>
                                 ):(
                                     <div className='px-4 pb-4'>
@@ -202,7 +202,7 @@ export default function InfoActualizacion({tipo}) {
                                                 className='hover:text-orange-300  cursor-pointer justify-center'
                                                 onClick={toggleExpand}
                                             >
-                                                <IconDownUp clase={'w-full py-6 pr-8 mt-3 left-0 top-0'} tamanio={8} />
+                                                <IconDownUp clase={'w-full py-6 pr-8 mt-3 left-0 top-0'} tamanio={8} titulosFormatos={null} />
                                             </div> 
                                         </div>
                                         <div className='text-lg text-end'>
@@ -310,7 +310,7 @@ export default function InfoActualizacion({tipo}) {
                                     <div  className='ml-auto mx-4'>
                                         {formattedDate1}
                                     </div>
-                                    <IconDownUp clase={'w-full h-full left-0 pr-2'} tamanio={4} />
+                                    <IconDownUp clase={'w-full h-full left-0 pr-2'} tamanio={4} titulosFormatos={null} />
                                 </div>
                             )}
                         </div>

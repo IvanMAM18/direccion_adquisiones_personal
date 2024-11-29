@@ -33,6 +33,13 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/formato/{modo}/{tipo}', function ($modo, $tipo) {
+    return Inertia::render('Formato', [
+        'modo' => $modo,
+        'tipo' => $tipo
+    ]);
+})->middleware(['auth', 'verified'])->name('formato');
+
 Route::get('/actualizacion/{tipo}', function ($tipo) {
     return Inertia::render('Actualizacion', ['tipo' => $tipo]);
  })->middleware(['auth', 'verified'])->name('actualizacion');

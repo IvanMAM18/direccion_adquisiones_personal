@@ -8,11 +8,11 @@ export default function Dashboard({ auth }) {
         <>
             <AuthenticatedLayout
                 user={auth.user}
-                header={<h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">OFICIALIA MAYOR DIRECCION DE ADQUISIONES Y SERVICIOS GENERALES</h2>}
+                header={<h2 className="px-16 py-3 font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">OFICIALIA MAYOR DIRECCION DE ADQUISIONES Y SERVICIOS GENERALES</h2>}
             >
                 <Head title="Inicio"/>
 
-                <div className="relative w-full pt-4 bg-dots-darker bg-center  selection:bg-red-500 selection:text-white">
+                <div className="relative w-full min-h-screen pt-4 bg-dots-darker bg-center  selection:bg-red-500 selection:text-white">
                     <div className="w-11/12 mx-auto">
                         <InfoExtraTabla></InfoExtraTabla>
                     </div>
