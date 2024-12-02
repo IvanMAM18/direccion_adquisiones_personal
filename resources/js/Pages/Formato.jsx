@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import InfoActualizacion from '@/Components/InfoActualizacion';
+import InfoFormato from '@/Components/InfoFormato';
 import IconDownUp from '@/Components/IconDownUp';
 import Footer from '@/Layouts/Footer';
 import { Head } from '@inertiajs/react';
@@ -25,7 +25,7 @@ export default function Formato({ auth , modo ,tipo}) {
 
                 <div className="relative w-full min-h-screen pt-4 bg-dots-darker bg-center  selection:bg-red-500 selection:text-white">
                     <div className="w-11/12 mx-auto">
-                        <InfoActualizacion tipo={tipo}/> 
+                        <InfoFormato modo={modo} tipo={tipo}/> 
                     </div>
                 </div>
                 <Footer/>

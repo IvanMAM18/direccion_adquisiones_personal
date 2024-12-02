@@ -6,12 +6,13 @@ import IconDownUp from './IconDownUp';
 import axios from 'axios';
 //import FileUpload from "@/Components/FileUpload";
 
-export default function InfoActualizacion({tipo}) {
+export default function InfoFormato({modo, tipo}) {
     const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 680);
     const [isVisible, setIsVisible] = useState(false);
     const [selectedOption, setSelectedOption] = useState('LOCAL');
     const [isOpen, setIsOpen] = useState(false);
     const [isExpanded, setIsExpanded] = useState(true);
+    const [isHovered, setIsHovered] = useState(false);
     const [isOpenTwo, setIsOpenTwo] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const currentDate = new Date();
@@ -167,14 +168,21 @@ export default function InfoActualizacion({tipo}) {
                         </div>
                     </div>
                     {isModalOpen && (
-                        <ModalInfoRequisitos/>
+                        <ModalInfoRequisitos modo={modo} tipo={tipo}/>
                     )}
                     <div className='relative'>
                         
                         <div
-                            className={`px-4  text-rose-950 rounded-2xl opacity-85   transition-all duration-300 ${
-                                isExpanded ? 'bg-orange-300 cursor-pointer hover:opacity-100 hover:text-white hover:shadow-xs hover:drop-shadow-lg' : 'h-auto border-2 border-orange-300'
-                            }`}
+                            className=
+                            {`px-4 rounded-2xl opacity-85 transition-all duration-300 
+                                ${isExpanded
+                                    ? 'bg-orange-300 text-zinc-800 cursor-pointer hover:opacity-100 hover:text-pink-950 hover:shadow-xs hover:drop-shadow-lg'
+                                    : isHovered
+                                    ? 'bg-pink-950 text-orange-300'
+                                    : 'bg-transparent text-pink-950'
+                                } h-auto border-2 border-orange-300
+                                
+                            `}
                         >
                             {data ? (
                                 isExpanded ? (
@@ -182,9 +190,15 @@ export default function InfoActualizacion({tipo}) {
                                         className='z-10 py-4 flex items-center'
                                         onClick={toggleExpand}
                                     >
-                                        <IconLocalForaneo selectedTipoLF={selectedOption} tamanio={10} />
+                                        <svg className="h-10 w-10" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />  
+                                            <polyline points="14 2 14 8 20 8" />  
+                                            <line x1="16" y1="13" x2="8" y2="13" />  
+                                            <line x1="16" y1="17" x2="8" y2="17" />  
+                                            <polyline points="10 9 9 9 8 9" />
+                                        </svg>
                                         <div className='px-4 text-xl font-bold'>
-                                            {data.negocio.nombre.toUpperCase()}{tipo}
+                                            {data.negocio.nombre.toUpperCase()}
                                         </div>
                                         <div  className='ml-auto mx-4'>
                                             {formattedDate1}
@@ -192,11 +206,20 @@ export default function InfoActualizacion({tipo}) {
                                         <IconDownUp clase={'w-full h-full left-0 pr-2'} tamanio={4} titulosFormatos={null}/>
                                     </div>
                                 ):(
-                                    <div className='px-4 pb-4'>
-                                        <div className='z-10 py-4 flex items-center'>
-                                            <IconLocalForaneo selectedTipoLF={selectedOption} tamanio={16} />
+                                    <div className={`px-4 pb-4 `}>
+                                        <div className='z-10 py-4 flex items-center'
+                                            onMouseEnter={() => setIsHovered(true)} // Cambia el estado a true cuando el cursor entra
+                                            onMouseLeave={() => setIsHovered(false)} // Cambia el estado a false cuando el cursor sale
+                                        >
+                                            <svg className="h-16 w-16" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />  
+                                                <polyline points="14 2 14 8 20 8" />  
+                                                <line x1="16" y1="13" x2="8" y2="13" />  
+                                                <line x1="16" y1="17" x2="8" y2="17" />  
+                                                <polyline points="10 9 9 9 8 9" />
+                                            </svg>
                                             <div className='px-4 text-xl font-bold'>
-                                                {selectedOption}
+                                                FORMATO DE {modo.toUpperCase()}
                                             </div>
                                             <div  
                                                 className='hover:text-orange-300  cursor-pointer justify-center'
@@ -209,81 +232,89 @@ export default function InfoActualizacion({tipo}) {
                                             LA PAZ, B.C.S A {formattedDate2.toUpperCase()}
                                         </div>
                                         <div className='mb-1'>
-                                            <p className='text-xs text-zinc-800'>RAZON SOCIAL:</p>
+                                            <p className={`text-xs ${isHovered ? 'text-zinc-300' : 'text-zinc-800'}`}>
+                                                {
+                                                    modo == 'moral' ? ('RAZON SOCIAL') : ('NOMBRE DEL PROPIETARIO')
+                                                }
+                                                :</p>
                                             <p className='text-xl font-bold'>{data.negocio.persona_moral.razon_social.toUpperCase()}</p>
                                         </div>
                                         <div className='my-1'>
-                                            <p className='text-xs text-zinc-800'>NOMBRE COMERCIO:</p>
+                                            <p className={`text-xs ${isHovered ? 'text-zinc-300' : 'text-zinc-800'}`}>
+                                                {
+                                                    modo == 'moral' ? ('NOMBRE COMERCIO') : ('DENOMINACION COMERCIAL')
+                                                }
+                                                :</p>
                                             <p className='text-xl font-bold'>{data.negocio.nombre.toUpperCase()}</p>
                                         </div>
                                         <div className='my-1'>
-                                            <p className='text-xs text-zinc-800'>DOMICILIO: </p>
+                                            <p className={`text-xs ${isHovered ? 'text-zinc-300' : 'text-zinc-800'}`}>DOMICILIO: </p>
                                             <p className='text-xl font-bold'>{data.negocio.direccion.calle_principal.toUpperCase()} E/ {data.negocio.direccion.calles.toUpperCase()}</p>
                                         </div>
                                         <div className='flex my-1'>
                                             <div className='w-1/2'>
-                                                <p className='text-xs text-zinc-800'>COLONIA:</p>
+                                                <p className={`text-xs ${isHovered ? 'text-zinc-300' : 'text-zinc-800'}`}>COLONIA:</p>
                                                 <p className='text-xl font-bold'>{data.negocio.direccion.colonia.toUpperCase()}</p>
                                             </div>
                                             <div className='w-1/4'>
-                                                <p className='text-xs text-zinc-800'>CODIGO POSTAL: </p>
+                                                <p className={`text-xs ${isHovered ? 'text-zinc-300' : 'text-zinc-800'}`}>CODIGO POSTAL: </p>
                                                 <p className='text-xl font-bold'>{data.negocio.direccion.codigo_postal.toUpperCase()}</p>
                                             </div>
                                             <div className='w-1/4'>
-                                                <p className='text-xs text-zinc-800'>POBLACION: </p>
+                                                <p className={`text-xs ${isHovered ? 'text-zinc-300' : 'text-zinc-800'}`}>POBLACION: </p>
                                                 <p className='text-xl font-bold'>[Población]</p>
                                             </div>
                                         </div>
                                         <div className='flex my-1'>
                                             <div className='w-1/2'>
-                                                <p className='text-xs text-zinc-800'>CORREO ELECTRONICO:</p>
+                                                <p className={`text-xs ${isHovered ? 'text-zinc-300' : 'text-zinc-800'}`}>CORREO ELECTRONICO:</p>
                                                 <p className='text-xl font-bold'>{data.negocio.persona_fisica.email}</p>
                                             </div>
                                             <div className='w-1/2'>
-                                                <p className='text-xs text-zinc-800'>REGISTRO GENERAL DE CONTR.:</p>
+                                                <p className={`text-xs ${isHovered ? 'text-zinc-300' : 'text-zinc-800'}`}>REGISTRO GENERAL DE CONTR.:</p>
                                                 <p className='text-xl font-bold'>{data.negocio.persona_fisica.rfc}</p>
                                             </div>
                                         </div>
                                         <div className='my-1'>
-                                            <p className='text-xs text-zinc-800'>ACTIVIDAD ECONOMICA Y/O PREPONDERANTE:</p>
+                                            <p className={`text-xs ${isHovered ? 'text-zinc-300' : 'text-zinc-800'}`}>ACTIVIDAD ECONOMICA Y/O PREPONDERANTE:</p>
                                             <p className='text-xl font-bold'>[Actividad Económica]</p>
                                         </div>
                                         <div className='flex my-1'>
                                             <div className='w-1/2'>
-                                                <p className='text-xs text-zinc-800'>TELEFONO EMPRESA:</p>
+                                                <p className={`text-xs ${isHovered ? 'text-zinc-300' : 'text-zinc-800'}`}>TELEFONO EMPRESA:</p>
                                                 <p className='text-xl font-bold'>[Teléfono Empresa]</p>
                                             </div>
                                             <div className='w-1/4'>
-                                                <p className='text-xs text-zinc-800'>NUM. CELULAR:</p>
+                                                <p className={`text-xs ${isHovered ? 'text-zinc-300' : 'text-zinc-800'}`}>NUM. CELULAR:</p>
                                                 <p className='text-xl font-bold'>{data.negocio.telefono.toUpperCase()}</p>
                                             </div>
                                             <div className='w-1/4'>
-                                                <p className='text-xs text-zinc-800'>AGENTE DE VENTA Y/O PERSONA DE ENLACE:</p>
+                                                <p className={`text-xs ${isHovered ? 'text-zinc-300' : 'text-zinc-800'}`}>AGENTE DE VENTA Y/O PERSONA DE ENLACE:</p>
                                                 <p className='text-xl font-bold'>[Agente de Venta]</p>
                                             </div>
                                         </div>
                                         <div className='flex my-1'>
                                             <div className='w-1/2'>
-                                                <p className='text-xs text-zinc-800'>NOMBRE COMPLETO DEL REPRESENTANTE LEGAL:</p>
+                                                <p className={`text-xs ${isHovered ? 'text-zinc-300' : 'text-zinc-800'}`}>NOMBRE COMPLETO DEL REPRESENTANTE LEGAL:</p>
                                                 <p className='text-xl font-bold'>[Nombre Completo]</p>
                                             </div>
                                             <div className='w-1/2'>
-                                                <p className='text-xs text-zinc-800'>TELEFONO DEL REPRESENTANTE LEGAL:</p>
+                                                <p className={`text-xs ${isHovered ? 'text-zinc-300' : 'text-zinc-800'}`}>TELEFONO DEL REPRESENTANTE LEGAL:</p>
                                                 <p className='text-xl font-bold'>[Teléfono del Representante]</p>
                                             </div>
                                         </div>
                                         <div className='flex my-1'>
                                             <div className='w-1/2'>
-                                                <p className='text-xs text-zinc-800'>RFC DEL REPRESENTANTE LEGAL:</p>
+                                                <p className={`text-xs ${isHovered ? 'text-zinc-300' : 'text-zinc-800'}`}>RFC DEL REPRESENTANTE LEGAL:</p>
                                                 <p className='text-xl font-bold'>[RFC del representante legal]</p>
                                             </div>
                                             <div className='w-1/2'>
-                                                <p className='text-xs text-zinc-800'>PLAZO DE CREDITO:</p>
+                                                <p className={`text-xs ${isHovered ? 'text-zinc-300' : 'text-zinc-800'}`}>PLAZO DE CREDITO:</p>
                                                 <p className='text-xl font-bold'>[Plazo de Crédito]</p>
                                             </div>
                                         </div>
                                         <div className='justify-items-end'>
-                                            <button className='flex items-center bg-orange-300 text-zinc-800 py-2 px-4 rounded hover:bg-orange-400 hover:font-bold hover:text-white'>
+                                            <button className='flex items-center bg-orange-300 text-zinc-800 py-2 px-4 rounded hover:bg-orange-400 hover:font-bold hover:text-pink-950'>
                                                 <svg className="h-4 w-4" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
                                                     <path stroke="none" d="M0 0h24v24H0z"/>  
                                                     <path d="M14 3v4a1 1 0 0 0 1 1h4" />  

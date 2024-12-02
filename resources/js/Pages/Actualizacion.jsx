@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import InfoActualizacion from '@/Components/InfoActualizacion';
+import InfoActualizacion from '@/Components/InfoFormato';
 import IconDownUp from '@/Components/IconDownUp';
 import Footer from '@/Layouts/Footer';
 import { Head } from '@inertiajs/react';
