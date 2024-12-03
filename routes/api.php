@@ -21,7 +21,6 @@ use App\Http\Controllers\DataArmonizacionController;
 
 // Route::resource('data-armonizacion', DataArmonizacionController::class);
 //Route::resource('titulos', TituloController::class);
-Route::get('/tabla-data-armonizacion', [TablaDataArmonizacionController::class, 'indexOne']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

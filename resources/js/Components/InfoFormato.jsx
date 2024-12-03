@@ -1,7 +1,9 @@
 import { Head } from '@inertiajs/react';
 import React, { useState,useRef,useEffect } from 'react';
 import IconLocalForaneo from './IconLocalForaneo';
+import ButtonExportExcel from './ButtonExportExcel';
 import ModalInfoRequisitos from './ModalInfoRequisitos';
+import ModalInfoFormato from './ModalInfoFormato';
 import IconDownUp from './IconDownUp';
 import axios from 'axios';
 //import FileUpload from "@/Components/FileUpload";
@@ -19,13 +21,45 @@ export default function InfoFormato({modo, tipo}) {
     const [estaEnBusqueda, setEstaEnBusqueda] = useState(false);
     const [data, setData] = useState(null);
     const [error, setError] = useState(null);
-    const id = '5'; // ID fijo para buscar
+    const [id, setId] = useState('6');//id = '5'; // ID fijo para buscar
+    const [inputValue, setInputValue] = useState('');
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await axios.post('https://177u01isy3.lapaz.gob.mx/api/negocios/buscar', {
                     q: id,
+                }, {
+                    headers: {
+                        'Authorization': 'Bearer $2y$10$cY1S7FqotCNZ6l6t4z//UOxkKiWisAtnPtnRsRtOHpkTMNEeyFgkq',
+                        'Content-Type': 'application/json',
+                    },
+                });
+                setData(response.data);
+                console.log(response.data);
+                setError(null);
+            } catch (err) {
+                setError('Error al buscar el negocio');
+                setData(null);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    const manejarCambio = (e) => {
+        setInputValue(e.target.value); // Actualiza el estado con el valor del input
+        console.log(e.target.value); // Muestra el valor en la consola
+    };
+
+
+    const manejarClickDeCancelar = () => {
+        console.log('BUSCAR: '+inputValue);
+        setId(inputValue);
+        const fetchData = async () => {
+            try {
+                const response = await axios.post('https://177u01isy3.lapaz.gob.mx/api/negocios/buscar', {
+                    q: inputValue,
                 }, {
                     headers: {
                         'Authorization': 'Bearer $2y$10$cY1S7FqotCNZ6l6t4z//UOxkKiWisAtnPtnRsRtOHpkTMNEeyFgkq',
@@ -42,22 +76,14 @@ export default function InfoFormato({modo, tipo}) {
         };
 
         fetchData();
-    }, []);
-
-    const manejarClickDeBusqueda = () => {
-        setEstaEnBusqueda(true);
-    };
-
-    const manejarClickDeCancelar = () => {
+        setIsExpanded(true);
+        setInputValue(''); // Limpia el campo de entrada
+        console.log('Input limpiado'); // Mensaje en la consola
         setEstaEnBusqueda(false);
     };
 
     // Formato "11/12/2024"
     const formattedDate1 = `${currentDate.getDate().toString().padStart(2, '0')}/${(currentDate.getMonth() + 1).toString().padStart(2, '0')}/${currentDate.getFullYear()}`;
-
-    // Formato "12 de diciembre del 2024"
-    const options = { day: 'numeric', month: 'long', year: 'numeric' };
-    const formattedDate2 = currentDate.toLocaleDateString('es-ES', options).replace('de', 'de');
 
     const toggleModal = () => {
         setIsModalOpen(!isModalOpen);
@@ -141,6 +167,8 @@ export default function InfoFormato({modo, tipo}) {
                             <div className="relative rounded-lg">
                                 <input
                                     type="text"
+                                    value={inputValue}
+                                    onChange={manejarCambio} 
                                     className="pl-2 border rounded-lg bg-transparent border-transparent text-rose-950 placeholder-rose-900 hover:border hover:border-rose-900 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-rose-900 "
                                     placeholder="BUSCAR"
                                 />
@@ -219,7 +247,7 @@ export default function InfoFormato({modo, tipo}) {
                                                 <polyline points="10 9 9 9 8 9" />
                                             </svg>
                                             <div className='px-4 text-xl font-bold'>
-                                                FORMATO DE {modo.toUpperCase()}
+                                                FORMATO DE {modo.toUpperCase()} {tipo.toUpperCase()}
                                             </div>
                                             <div  
                                                 className='hover:text-orange-300  cursor-pointer justify-center'
@@ -228,92 +256,8 @@ export default function InfoFormato({modo, tipo}) {
                                                 <IconDownUp clase={'w-full py-6 pr-8 mt-3 left-0 top-0'} tamanio={8} titulosFormatos={null} />
                                             </div> 
                                         </div>
-                                        <div className='text-lg text-end'>
-                                            LA PAZ, B.C.S A {formattedDate2.toUpperCase()}
-                                        </div>
-                                        <div className='mb-1'>
-                                            <p className={`text-xs ${isHovered ? 'text-zinc-300' : 'text-zinc-800'}`}>
-                                                {
-                                                    modo == 'moral' ? ('RAZON SOCIAL') : ('NOMBRE DEL PROPIETARIO')
-                                                }
-                                                :</p>
-                                            <p className='text-xl font-bold'>{data.negocio.persona_moral.razon_social.toUpperCase()}</p>
-                                        </div>
-                                        <div className='my-1'>
-                                            <p className={`text-xs ${isHovered ? 'text-zinc-300' : 'text-zinc-800'}`}>
-                                                {
-                                                    modo == 'moral' ? ('NOMBRE COMERCIO') : ('DENOMINACION COMERCIAL')
-                                                }
-                                                :</p>
-                                            <p className='text-xl font-bold'>{data.negocio.nombre.toUpperCase()}</p>
-                                        </div>
-                                        <div className='my-1'>
-                                            <p className={`text-xs ${isHovered ? 'text-zinc-300' : 'text-zinc-800'}`}>DOMICILIO: </p>
-                                            <p className='text-xl font-bold'>{data.negocio.direccion.calle_principal.toUpperCase()} E/ {data.negocio.direccion.calles.toUpperCase()}</p>
-                                        </div>
-                                        <div className='flex my-1'>
-                                            <div className='w-1/2'>
-                                                <p className={`text-xs ${isHovered ? 'text-zinc-300' : 'text-zinc-800'}`}>COLONIA:</p>
-                                                <p className='text-xl font-bold'>{data.negocio.direccion.colonia.toUpperCase()}</p>
-                                            </div>
-                                            <div className='w-1/4'>
-                                                <p className={`text-xs ${isHovered ? 'text-zinc-300' : 'text-zinc-800'}`}>CODIGO POSTAL: </p>
-                                                <p className='text-xl font-bold'>{data.negocio.direccion.codigo_postal.toUpperCase()}</p>
-                                            </div>
-                                            <div className='w-1/4'>
-                                                <p className={`text-xs ${isHovered ? 'text-zinc-300' : 'text-zinc-800'}`}>POBLACION: </p>
-                                                <p className='text-xl font-bold'>[Población]</p>
-                                            </div>
-                                        </div>
-                                        <div className='flex my-1'>
-                                            <div className='w-1/2'>
-                                                <p className={`text-xs ${isHovered ? 'text-zinc-300' : 'text-zinc-800'}`}>CORREO ELECTRONICO:</p>
-                                                <p className='text-xl font-bold'>{data.negocio.persona_fisica.email}</p>
-                                            </div>
-                                            <div className='w-1/2'>
-                                                <p className={`text-xs ${isHovered ? 'text-zinc-300' : 'text-zinc-800'}`}>REGISTRO GENERAL DE CONTR.:</p>
-                                                <p className='text-xl font-bold'>{data.negocio.persona_fisica.rfc}</p>
-                                            </div>
-                                        </div>
-                                        <div className='my-1'>
-                                            <p className={`text-xs ${isHovered ? 'text-zinc-300' : 'text-zinc-800'}`}>ACTIVIDAD ECONOMICA Y/O PREPONDERANTE:</p>
-                                            <p className='text-xl font-bold'>[Actividad Económica]</p>
-                                        </div>
-                                        <div className='flex my-1'>
-                                            <div className='w-1/2'>
-                                                <p className={`text-xs ${isHovered ? 'text-zinc-300' : 'text-zinc-800'}`}>TELEFONO EMPRESA:</p>
-                                                <p className='text-xl font-bold'>[Teléfono Empresa]</p>
-                                            </div>
-                                            <div className='w-1/4'>
-                                                <p className={`text-xs ${isHovered ? 'text-zinc-300' : 'text-zinc-800'}`}>NUM. CELULAR:</p>
-                                                <p className='text-xl font-bold'>{data.negocio.telefono.toUpperCase()}</p>
-                                            </div>
-                                            <div className='w-1/4'>
-                                                <p className={`text-xs ${isHovered ? 'text-zinc-300' : 'text-zinc-800'}`}>AGENTE DE VENTA Y/O PERSONA DE ENLACE:</p>
-                                                <p className='text-xl font-bold'>[Agente de Venta]</p>
-                                            </div>
-                                        </div>
-                                        <div className='flex my-1'>
-                                            <div className='w-1/2'>
-                                                <p className={`text-xs ${isHovered ? 'text-zinc-300' : 'text-zinc-800'}`}>NOMBRE COMPLETO DEL REPRESENTANTE LEGAL:</p>
-                                                <p className='text-xl font-bold'>[Nombre Completo]</p>
-                                            </div>
-                                            <div className='w-1/2'>
-                                                <p className={`text-xs ${isHovered ? 'text-zinc-300' : 'text-zinc-800'}`}>TELEFONO DEL REPRESENTANTE LEGAL:</p>
-                                                <p className='text-xl font-bold'>[Teléfono del Representante]</p>
-                                            </div>
-                                        </div>
-                                        <div className='flex my-1'>
-                                            <div className='w-1/2'>
-                                                <p className={`text-xs ${isHovered ? 'text-zinc-300' : 'text-zinc-800'}`}>RFC DEL REPRESENTANTE LEGAL:</p>
-                                                <p className='text-xl font-bold'>[RFC del representante legal]</p>
-                                            </div>
-                                            <div className='w-1/2'>
-                                                <p className={`text-xs ${isHovered ? 'text-zinc-300' : 'text-zinc-800'}`}>PLAZO DE CREDITO:</p>
-                                                <p className='text-xl font-bold'>[Plazo de Crédito]</p>
-                                            </div>
-                                        </div>
-                                        <div className='justify-items-end'>
+                                        <ModalInfoFormato modo={modo} tipo={tipo} isHovered={isHovered} data={data}/>
+                                        {/* <div className='justify-items-end'>
                                             <button className='flex items-center bg-orange-300 text-zinc-800 py-2 px-4 rounded hover:bg-orange-400 hover:font-bold hover:text-pink-950'>
                                                 <svg className="h-4 w-4" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
                                                     <path stroke="none" d="M0 0h24v24H0z"/>  
@@ -324,7 +268,8 @@ export default function InfoFormato({modo, tipo}) {
                                                 </svg>
                                                 EXPORTAR EXCEL
                                             </button>
-                                        </div>
+                                        </div> */}
+                                        <ButtonExportExcel data={data} tipo={tipo}/>
                                     </div> 
                                 )
                             ) : (
@@ -345,12 +290,7 @@ export default function InfoFormato({modo, tipo}) {
                                 </div>
                             )}
                         </div>
-                        
                     </div>
-                    
-
-                    
-                    
                 </div>
             </>
     );
