@@ -1,3 +1,5 @@
+import IconDownUp from './IconDownUp';
+
 export default function ModalInfoRequisitos({modo, tipo}) {
     return (
             <div className="absolute shadow-lg py-8 px-16 z-20 w-full h-[37vw] overflow-y-auto bg-white border border-orange-300 rounded-2xl text-rose-950 font-bold text-justify">

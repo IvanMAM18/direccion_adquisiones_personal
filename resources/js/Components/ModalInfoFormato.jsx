@@ -16,9 +16,15 @@ export default function ModalInfoFormato({modo, tipo, isHovered , data}) {
                 <p className='text-xl font-bold'>
                     { 
                         tipo == 'moral' ? (
-                            data.negocio.persona_moral.razon_social.toUpperCase()
+                            data.negocio.persona_moral && data.negocio.persona_moral.razon_social 
+                            ? data.negocio.persona_moral.razon_social.toUpperCase() 
+                            : '[SIN INFORMACIÓN]'
                         ) 
-                        : (data.negocio.persona_fisica.nombre.toUpperCase()) 
+                        : (
+                            data.negocio.persona_fisica && data.negocio.persona_fisica.nombre 
+                            ? data.negocio.persona_fisica.nombre.toUpperCase() 
+                            : '[SIN INFORMACIÓN]'
+                        ) 
                     }
                 </p>
             </div>
@@ -55,8 +61,18 @@ export default function ModalInfoFormato({modo, tipo, isHovered , data}) {
                     <p className={`text-xs ${isHovered ? 'text-zinc-300' : 'text-zinc-800'}`}>REGISTRO GENERAL DE CONTR.:</p>
                     <p className='text-xl font-bold'>
                         { 
-                            tipo == 'moral' ? (data.negocio.persona_moral.rfc) 
-                            : (data.negocio.persona_fisica.rfc) 
+                            tipo == 'moral' 
+                                ? (
+                                    data.negocio.persona_moral && data.negocio.persona_moral.rfc
+                                    ? data.negocio.persona_moral.rfc 
+                                    : '[SIN INFORMACIÓN]'
+                                ) 
+                                : (
+                                    data.negocio.persona_fisica && data.negocio.persona_fisica.rfc
+                                    ? data.negocio.persona_fisica.rfc 
+                                    : '[SIN INFORMACIÓN]'
+                                    
+                                ) 
                         }
                     </p>
                 </div>

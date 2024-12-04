@@ -202,14 +202,13 @@ export default function InfoFormato({modo, tipo}) {
                         
                         <div
                             className=
-                            {`px-4 rounded-2xl opacity-85 transition-all duration-300 
+                            {`px-4 rounded-2xl opacity-85 transition-all duration-300 h-auto
                                 ${isExpanded
                                     ? 'bg-orange-300 text-zinc-800 cursor-pointer hover:opacity-100 hover:text-pink-950 hover:shadow-xs hover:drop-shadow-lg'
                                     : isHovered
-                                    ? 'bg-pink-950 text-orange-300'
-                                    : 'bg-transparent text-pink-950'
-                                } h-auto border-2 border-orange-300
-                                
+                                        ? 'bg-pink-950 text-orange-300 border-2 border-orange-300'
+                                        : 'bg-transparent text-pink-950 border-2 border-orange-300'
+                                } 
                             `}
                         >
                             {data ? (
@@ -253,22 +252,10 @@ export default function InfoFormato({modo, tipo}) {
                                                 className='hover:text-orange-300  cursor-pointer justify-center'
                                                 onClick={toggleExpand}
                                             >
-                                                <IconDownUp clase={'w-full py-6 pr-8 mt-3 left-0 top-0'} tamanio={8} titulosFormatos={null} />
+                                                <IconDownUp clase={'w-full py-6 pr-8 mt-3 left-0 top-0'} tamanio={14} titulosFormatos={null} />
                                             </div> 
                                         </div>
                                         <ModalInfoFormato modo={modo} tipo={tipo} isHovered={isHovered} data={data}/>
-                                        {/* <div className='justify-items-end'>
-                                            <button className='flex items-center bg-orange-300 text-zinc-800 py-2 px-4 rounded hover:bg-orange-400 hover:font-bold hover:text-pink-950'>
-                                                <svg className="h-4 w-4" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z"/>  
-                                                    <path d="M14 3v4a1 1 0 0 0 1 1h4" />  
-                                                    <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />  
-                                                    <line x1="12" y1="11" x2="12" y2="17" />  
-                                                    <polyline points="9 14 12 17 15 14" />
-                                                </svg>
-                                                EXPORTAR EXCEL
-                                            </button>
-                                        </div> */}
                                         <ButtonExportExcel data={data} tipo={tipo}/>
                                     </div> 
                                 )
