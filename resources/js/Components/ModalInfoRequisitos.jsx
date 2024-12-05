@@ -2,7 +2,7 @@ import IconDownUp from './IconDownUp';
 
 export default function ModalInfoRequisitos({modo, tipo}) {
     return (
-            <div className="absolute shadow-lg py-8 px-16 z-20 w-full h-[37vw] overflow-y-auto bg-white border border-orange-300 rounded-2xl text-rose-950 font-bold text-justify">
+            <div className="absolute shadow-lg py-10 px-16 z-20 w-full h-[37vw] overflow-y-auto bg-white border border-orange-300 rounded-2xl text-rose-950 font-bold text-justify">
                 <div className='mx-2 flex text-xl items-center justify-center'>
                     REQUISITOS {modo.toUpperCase()} PARA PERSONAS {tipo.toUpperCase()}
                     <svg className="h-6 w-6 ml-2" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
@@ -11,7 +11,7 @@ export default function ModalInfoRequisitos({modo, tipo}) {
                 </div>
                 {
                     modo === 'actualizacion' ? (
-                        <div className='text-sm'>
+                        <div className='text-sm my-10'>
                             <p className="my-2">
                                 1. ESCRITO LIBRE DE INTENCION PARA PERTENECER AL PADRON DE PROVEEDORES MENCION TANTO DEL TIPO DE SERVICIO Y/O EL BIEN EN FORMA GENERAL QUE SE DESEA OFERTAR A ESTA INSTITUCION, ASI COMO DE QUE CUMPLE CON LOS ART. 34 (CUENTA CON 1 AÑO O MAS CON SU REGISTRO ANTE EL SAT) Y ART. 61 (NO SER SERVIDOR(ES) PUBLICO) DE LA LEY DE ADQUISIONES ARRENDAMIENTO Y SERVICIOS DEL ESTADO DE BAJA CALIFORNIA SUR.
                             </p>
@@ -68,7 +68,7 @@ export default function ModalInfoRequisitos({modo, tipo}) {
                             </p>
                         </div>
                     ) : (
-                        <div className='text-sm font-medium'>
+                        <div className='text-sm font-medium my-auto'>
                             <p className="my-2 font-bold">
                                 DOCUMENTOS EN COPIA QUE SE REQUIEREN PARA REGISTRARSE EN EL PADRON DE PROVEEDORES DEL MUNICIPIO DE LA PAZ B.C.S.
                             </p>

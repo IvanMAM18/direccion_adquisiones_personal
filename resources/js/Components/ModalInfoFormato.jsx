@@ -61,18 +61,16 @@ export default function ModalInfoFormato({modo, tipo, isHovered , data}) {
                     <p className={`text-xs ${isHovered ? 'text-zinc-300' : 'text-zinc-800'}`}>REGISTRO GENERAL DE CONTR.:</p>
                     <p className='text-xl font-bold'>
                         { 
-                            tipo == 'moral' 
-                                ? (
-                                    data.negocio.persona_moral && data.negocio.persona_moral.rfc
-                                    ? data.negocio.persona_moral.rfc 
-                                    : '[SIN INFORMACIÓN]'
-                                ) 
-                                : (
-                                    data.negocio.persona_fisica && data.negocio.persona_fisica.rfc
-                                    ? data.negocio.persona_fisica.rfc 
-                                    : '[SIN INFORMACIÓN]'
-                                    
-                                ) 
+                            tipo == 'moral' ? (
+                                data.negocio.persona_moral && data.negocio.persona_moral.rfc
+                                ? data.negocio.persona_moral.rfc 
+                                : '[SIN INFORMACIÓN]'
+                            ) 
+                            : (
+                                data.negocio.persona_fisica && data.negocio.persona_fisica.rfc
+                                ? data.negocio.persona_fisica.rfc 
+                                : '[SIN INFORMACIÓN]'
+                            ) 
                         }
                     </p>
                 </div>

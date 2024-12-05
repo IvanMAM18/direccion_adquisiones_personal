@@ -36,7 +36,7 @@ export default function InfoFormato({modo, tipo}) {
                     },
                 });
                 setData(response.data);
-                console.log(response.data);
+                console.log(data);
                 setError(null);
             } catch (err) {
                 setError('Error al buscar el negocio');
@@ -66,11 +66,17 @@ export default function InfoFormato({modo, tipo}) {
                         'Content-Type': 'application/json',
                     },
                 });
+                
                 setData(response.data);
                 console.log(data);
                 setError(null);
             } catch (err) {
-                setError('Error al buscar el negocio');
+                // Manejo específico para el error 404
+                if (err.response.status === 404) {
+                    setError('No se encontró información para la búsqueda.');
+                } else {
+                    setError('Error al buscar el negocio');
+                }
                 setData(null);
             }
         };
@@ -79,6 +85,7 @@ export default function InfoFormato({modo, tipo}) {
         setIsExpanded(true);
         setInputValue(''); // Limpia el campo de entrada
         console.log('Input limpiado'); // Mensaje en la consola
+        console.log(error);
         setEstaEnBusqueda(false);
     };
 
@@ -256,7 +263,7 @@ export default function InfoFormato({modo, tipo}) {
                                             </div> 
                                         </div>
                                         <ModalInfoFormato modo={modo} tipo={tipo} isHovered={isHovered} data={data}/>
-                                        <ButtonExportExcel data={data} tipo={tipo}/>
+                                        <ButtonExportExcel data={data} modo={modo} tipo={tipo}/>
                                     </div> 
                                 )
                             ) : (

@@ -6,10 +6,6 @@ use App\Http\Controllers\ChirpController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TituloController;
 use App\Http\Controllers\LogsController;
-use App\Http\Controllers\TablaActualizacionPersonaFisicaController;
-use App\Http\Controllers\TablaActualizacionPersonaMoralController;
-use App\Http\Controllers\TablaAltaPersonaFisicaController;
-use App\Http\Controllers\TablaAltaPersonaMoralController;
 use App\Http\Controllers\TablaAltaSucursalPersonaFisicaController;
 use App\Http\Controllers\TablaAltaSucursalPersonaMoralController;
 use Illuminate\Foundation\Application;
@@ -26,6 +22,7 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -39,30 +36,6 @@ Route::get('/formato/{modo}/{tipo}', function ($modo, $tipo) {
         'tipo' => $tipo
     ]);
 })->middleware(['auth', 'verified'])->name('formato');
-
-Route::get('/actualizacion/{tipo}', function ($tipo) {
-    return Inertia::render('Actualizacion', ['tipo' => $tipo]);
- })->middleware(['auth', 'verified'])->name('actualizacion');
-
- Route::get('/alta/{tipo}', function ($tipo) {
-    return Inertia::render('Alta', ['tipo' => $tipo]);
- })->middleware(['auth', 'verified'])->name('alta');
-
-Route::resource('/actualizacion-persona-moral', TablaActualizacionPersonaMoralController::class)
-    ->only(['index', 'store', 'update', 'destroy'])
-    ->middleware('auth');
-
-Route::resource('/actualizacion-persona-fisica', TablaActualizacionPersonaFisicaController::class)
-    ->only(['index', 'store', 'update', 'destroy'])
-    ->middleware('auth');
-
-Route::resource('/alta-persona-moral', TablaAltaPersonaMoralController::class)
-    ->only(['index', 'store', 'update', 'destroy'])
-    ->middleware('auth');
-
-Route::resource('/alta-persona-fisica', TablaAltaPersonaFisicaController::class)
-    ->only(['index', 'store', 'update', 'destroy'])
-    ->middleware('auth');
 
 Route::resource('/alta-sucursal-persona-moral', TablaAltaSucursalPersonaMoralController::class)
     ->only(['index', 'store', 'update', 'destroy'])
