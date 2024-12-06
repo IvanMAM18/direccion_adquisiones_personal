@@ -4,12 +4,12 @@ import { Link } from '@inertiajs/react';
 export default function Guest({ children }) {
     return (
         <>
-            <div className="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-dots-darker bg-center bg-white dark:bg-pink-50 selection:bg-red-500  selection:text-white">
+            <div className="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-dots-darker bg-center bg-white dark:bg-pink-50 selection:bg-red-500  selection:text-orange-300">
                 <div>
                     <img src="../images/escudo_lapaz_2024.png" alt="" className="w-40 h-30 fill-current text-gray-500"/>
                 </div>
 
-                <div className="w-full sm:max-w-md mt-6 px-6 py-4 bg-pink-950 dark:bg-rose-950 shadow-md overflow-hidden sm:rounded-lg">
+                <div className="w-full sm:max-w-md mt-6 px-6 py-4 bg-pink-950 border-2 border-orange-400 dark:bg-rose-950 shadow-md overflow-hidden sm:rounded-lg">
                     {children}
                 </div>
             </div>
